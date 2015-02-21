@@ -11,8 +11,8 @@ public class Main {
 
     public static void main(String[] args) throws ParseException, IOException {
         Options options = new Options();
-        options.addOption("c", "clean", false, "for cleaning datastore");
-        options.addOption("a", "amount", true, "numbers of entities to be generated");
+        options.addOption("c", "clean", false, "clean datastore");
+        options.addOption("a", "amount", true, "generate the given number of entities");
 
         if (args == null || args.length < 1 || args[0] == null) {
             printHelp(options);
@@ -43,6 +43,6 @@ public class Main {
 
     private static void printHelp(Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("it.polimi.hegira.command.Main", options);
+        formatter.printHelp(" ", options);
     }
 }

@@ -6,10 +6,11 @@
 
 	<groupId>it.polimi.hegira</groupId>
 	<artifactId>generator</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 
 	<properties>
 		<kundera.version>2.15</kundera.version>
+		<appengine.version>1.9.18</appengine.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -36,15 +37,16 @@
 		</dependency>
 
 
+		<!-- GAE remote API -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.9.17</version>
+			<version>${appengine.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-remote-api</artifactId>
-			<version>1.9.17</version>
+			<version>${appengine.version}</version>
 		</dependency>
 
 		<!-- Lombok -->

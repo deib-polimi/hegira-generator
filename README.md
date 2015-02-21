@@ -14,7 +14,7 @@ An executable jar is created.
 To run the program execute it a har:
 
 ```
-java -jar target/generator-1.0-SNAPSHOT-jar-with-dependencies.jar
+java -jar target/generator-1.0-jar-with-dependencies.jar
 ```
 This will print the usage.
 
