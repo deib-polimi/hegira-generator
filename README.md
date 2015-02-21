@@ -27,6 +27,6 @@ Two are the possible usages:
 Datastore instance must be configured in two places:
 
 - [Clean.java](https://github.com/Arci/hegira-generator/blob/master/src/main/java/it/polimi/hegira/command/Clean.java) modifying constants accordingly
-- [persistence.xml](https://github.com/Arci/hegira-generator/blob/master/src/main/java/it/polimi/hegira/command/Clean.java) modifying properties, for GAE extension documentation see [here](https://github.com/Arci/kundera-gae-datastore);
+- [persistence.xml](https://github.com/Arci/hegira-generator/blob/master/src/main/java/it/polimi/hegira/command/Clean.java) modifying properties, for GAE extension documentation see [here](https://github.com/Arci/kundera-gae-datastore)
 
 Then rebuild the project.
