@@ -10,10 +10,13 @@ import java.io.IOException;
 @Slf4j
 public class Clean {
 
+    private static final String SERVER = "localhost";
+    private static final int PORT = 8080;
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "pwd";
+
     public static void clean() throws IOException {
-        RemoteApiOptions options = new RemoteApiOptions()
-                .server("localhost", 8080)
-                .credentials("username", "");
+        RemoteApiOptions options = new RemoteApiOptions().server(SERVER, PORT).credentials(USERNAME, PASSWORD);
         RemoteApiInstaller installer = new RemoteApiInstaller();
         installer.install(options);
 
