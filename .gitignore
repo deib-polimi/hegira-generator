@@ -1,0 +1,15 @@
+*.iml
+*.ipr
+*.iws
+target/
+classes/
+/var
+pom.xml.versionsBackup
+test-output/
+.idea
+.DS_Store
+.classpath
+.settings
+.project
+test-output
+*~

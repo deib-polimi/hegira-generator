@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<migration>
+	<zooKeeper>
+		<type>thread</type>
+		<connection>localhost:2181</connection>
+		<range>10</range>
+	</zooKeeper>
+	<backup>
+		<execute>no</execute>
+	</backup>
+</migration>
