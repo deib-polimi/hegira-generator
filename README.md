@@ -28,6 +28,10 @@ Two are the possibilities:
 
 Datastore cleanup is exploited querying the Datastore through the [Metadata API](https://cloud.google.com/appengine/docs/java/datastore/metadataqueries) retrieving all the persisted Kind(s) and then deleting all entities for each Kind.
 
+###State backup
+State of generation is backed up inside the backup folder specified inside `migration.xml`.
+Besides the file for sequence number range backup, a file named `generation` will be created, this file contains, one per line, the tables completely generated, those table will not be generated again if the program is executed again.
+
 ###Configuration
 _Note that each configuration change requires a rebuild for the changes to be applied._
 
@@ -35,7 +39,7 @@ _Note that each configuration change requires a rebuild for the changes to be ap
 To configure the Datastore instance, two files must be updated:
 
 - [Clean.java](https://github.com/Arci/hegira-generator/blob/master/src/main/java/it/polimi/hegira/command/Clean.java) modifying constants accordingly
-- [persistence.xml](https://github.com/Arci/hegira-generator/blob/master/src/main/java/it/polimi/hegira/command/Clean.java) modifying properties, for GAE extension documentation see [here](https://github.com/Arci/kundera-gae-datastore)
+- [persistence.xml](https://github.com/Arci/hegira-generator/blob/master/src/main/resources/META-INF/persistence.xml) modifying properties, for GAE extension documentation see [here](https://github.com/Arci/kundera-gae-datastore)
 
 #####Configure CPIM
 Check the configuration for CPIM inside the [META-INF](https://github.com/Arci/hegira-generator/tree/master/src/main/resources/META-INF) folder.
@@ -47,5 +51,8 @@ Four are the required files:
 - persistence.xml
 - queue.xml
 
-since `persistence.xml` has been already configured to connect to the remote Datastore instance, the only relevant file to be checked is the `migration.xml` file.
+since `persistence.xml` has been already configured for the remote Datastore instance, the only relevant file to be checked is the `migration.xml` file.
 For the possible configuration available check the [template file](https://github.com/Arci/modaclouds-cpim-library/blob/master/templates/migration-template.xml).
+
+Note that the sequence number range will be changed at runtime in order to limit the number of requests to zookeeper.
+The runtime range will be _twice the amount_ of entities to generate unless the case in which is greater than 100, in which will be limited to 100.
