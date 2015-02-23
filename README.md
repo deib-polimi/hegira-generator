@@ -12,7 +12,7 @@ mvn clean package
 An executable jar is created.
 
 ###Usage
-To run the program execute it a har:
+To run the program execute the generated jar with dependencies:
 
 ```
 java -jar target/generator-1.0-jar-with-dependencies.jar
@@ -27,13 +27,13 @@ Two are the possibilities:
 Datastore cleanup is exploited querying the Datastore through the [Metadata API](https://cloud.google.com/appengine/docs/java/datastore/metadataqueries) retrieving all the persisted Kind(s) and then deleting all entities for each Kind.
 
 ###Configuration
+_Note that each configuration change requires a rebuild for the changes to be applied._
+
 ####Configure Datastore instance
 To configure the Datastore instance, two files must be updated:
 
 - [Clean.java](https://github.com/Arci/hegira-generator/blob/master/src/main/java/it/polimi/hegira/command/Clean.java) modifying constants accordingly
 - [persistence.xml](https://github.com/Arci/hegira-generator/blob/master/src/main/java/it/polimi/hegira/command/Clean.java) modifying properties, for GAE extension documentation see [here](https://github.com/Arci/kundera-gae-datastore)
-
-Then rebuild the project.
 
 #####Configure CPIM
 Check the configuration for CPIM inside the [META-INF](https://github.com/Arci/hegira-generator/tree/master/src/main/resources/META-INF) folder.
