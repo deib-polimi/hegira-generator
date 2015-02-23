@@ -24,6 +24,10 @@ public class Clean {
         DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
         for (Entity entity : datastoreService.prepare(query).asIterable()) {
             String kind = entity.getKey().getName();
+            if (kind.startsWith("__")) {
+                // statistic entity
+                continue;
+            }
             log.info("deleting all entities of kind [" + kind + "]");
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             query = new Query(kind).setKeysOnly();
