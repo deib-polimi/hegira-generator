@@ -19,11 +19,6 @@
 			<property name="kundera.port" value="8080"/>
 			<property name="kundera.username" value="username"/>
 			<property name="kundera.password" value="does-not-matter-on-localhost"/>
-			<!--
-			<property name="kundera.nodes" value="kundera-test.appspot.com"/>
-			<property name="kundera.username" value="fa.arcidiacono@gmail.com"/>
-			<property name="kundera.password" value="xnffsvsjhfmxfikk"/>
-			-->
 			<property name="kundera.client.lookup.class"
 					  value="it.polimi.kundera.client.datastore.DatastoreClientFactory"/>
 		</properties>

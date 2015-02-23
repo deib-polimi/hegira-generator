@@ -25,7 +25,7 @@ public class Clean {
         for (Entity entity : datastoreService.prepare(query).asIterable()) {
             String kind = entity.getKey().getName();
             if (kind.startsWith("__")) {
-                // statistic entity
+                log.info("skipping kind [" + kind + "]");
                 continue;
             }
             log.info("deleting all entities of kind [" + kind + "]");
