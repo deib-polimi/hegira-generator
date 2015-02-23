@@ -18,6 +18,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class Generate {
 
+    public static final int MAX_OFFSET = 100;
     private int quantity;
 
     private enum DependencyType {
@@ -38,7 +39,7 @@ public class Generate {
         CloudEntityManager em = MF.getFactory().getEntityManager();
 
         log.info("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
-        SeqNumberProvider.getInstance().setOffset(master.getSimpleName(), quantity * 2);
+        setSeqNumberOffset(master, quantity);
         for (Object o : generate(quantity, master)) {
             em.persist(o);
         }
@@ -51,7 +52,7 @@ public class Generate {
         log.info("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
         entities.put(master, generate(quantity, master));
 
-        SeqNumberProvider.getInstance().setOffset(master.getSimpleName(), quantity * 2);
+        setSeqNumberOffset(master, quantity);
         for (Object o : entities.get(master)) {
             em.persist(o);
         }
@@ -60,11 +61,21 @@ public class Generate {
             log.info("Generating [" + quantity + "] entities for slave class [" + slave.getSimpleName() + "]");
             entities.put(slave, generate(quantity, slave, entities.get(master), type));
 
-            SeqNumberProvider.getInstance().setOffset(slave.getSimpleName(), quantity * 2);
+            setSeqNumberOffset(slave, quantity);
             for (Object o : entities.get(slave)) {
                 em.persist(o);
             }
         }
+    }
+
+    private void setSeqNumberOffset(Class master, int quantity) {
+        int offset;
+        if (quantity >= MAX_OFFSET || (quantity * 2) >= MAX_OFFSET) {
+            offset = MAX_OFFSET;
+        } else {
+            offset = quantity * 2;
+        }
+        SeqNumberProvider.getInstance().setOffset(master.getSimpleName(), offset);
     }
 
     private List generate(int quantity, Class<? extends Randomizable> clazz) {
