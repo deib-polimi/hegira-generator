@@ -39,7 +39,7 @@ public class Generate {
         CloudEntityManager em = MF.getFactory().getEntityManager();
 
         log.info("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
-        setSeqNumberOffset(master, quantity);
+        setSeqNumberOffset(master.getSimpleName(), quantity);
         for (Object o : generate(quantity, master)) {
             em.persist(o);
         }
@@ -52,7 +52,7 @@ public class Generate {
         log.info("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
         entities.put(master, generate(quantity, master));
 
-        setSeqNumberOffset(master, quantity);
+        setSeqNumberOffset(master.getSimpleName(), quantity);
         for (Object o : entities.get(master)) {
             em.persist(o);
         }
@@ -61,21 +61,21 @@ public class Generate {
             log.info("Generating [" + quantity + "] entities for slave class [" + slave.getSimpleName() + "]");
             entities.put(slave, generate(quantity, slave, entities.get(master), type));
 
-            setSeqNumberOffset(slave, quantity);
+            setSeqNumberOffset(slave.getSimpleName(), quantity);
             for (Object o : entities.get(slave)) {
                 em.persist(o);
             }
         }
     }
 
-    private void setSeqNumberOffset(Class master, int quantity) {
+    private void setSeqNumberOffset(String tableName, int quantity) {
         int offset;
         if (quantity >= MAX_OFFSET || (quantity * 2) >= MAX_OFFSET) {
             offset = MAX_OFFSET;
         } else {
             offset = quantity * 2;
         }
-        SeqNumberProvider.getInstance().setOffset(master.getSimpleName(), offset);
+        SeqNumberProvider.getInstance().setOffset(tableName, offset);
     }
 
     private List generate(int quantity, Class<? extends Randomizable> clazz) {
