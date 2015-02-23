@@ -46,4 +46,4 @@ Four are the required files:
 - queue.xml
 
 since `persistence.xml` has been already configured to connect to the remote Datastore instance, the only relevant file to be checked is the `migration.xml` file.
-For the possible configuration available check the [template file](https://github.com/Arci/modaclouds-cpim-library/blob/master/templates/migration.xml).
+For the possible configuration available check the [template file](https://github.com/Arci/modaclouds-cpim-library/blob/master/templates/migration-template.xml).

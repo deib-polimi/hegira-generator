@@ -7,6 +7,6 @@
 	</zooKeeper>
 	<backup>
 		<type>file</type>
-		<file>/Users/Fabio/Desktop</file>
+		<directory>/Users/Fabio/Desktop/state</directory>
 	</backup>
 </migration>
