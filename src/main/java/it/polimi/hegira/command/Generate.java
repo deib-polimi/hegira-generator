@@ -6,7 +6,6 @@ import it.polimi.hegira.generator.entities.*;
 import it.polimi.modaclouds.cpimlibrary.entitymng.CloudEntityManager;
 import it.polimi.modaclouds.cpimlibrary.entitymng.migration.SeqNumberProvider;
 import it.polimi.modaclouds.cpimlibrary.mffactory.MF;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Query;
 import java.io.*;
@@ -15,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class Generate {
 
     public static final int MAX_OFFSET = 100;
@@ -43,16 +41,17 @@ public class Generate {
 
     private void persist(Class master) throws IOException {
         if (isTableAlreadyDone(master)) {
-            log.info("Generation for table [" + master.getSimpleName() + "] was already done");
+            System.out.println("Generation for table [" + master.getSimpleName() + "] was already done");
             return;
         }
 
         CloudEntityManager em = MF.getFactory().getEntityManager();
 
-        log.info("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
+        System.out.println("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
         setSeqNumberOffset(master.getSimpleName(), quantity);
         for (Object o : generate(quantity, master)) {
             em.persist(o);
+            System.out.println("\t" + o.toString());
         }
 
         saveTableDone(master);
@@ -61,33 +60,42 @@ public class Generate {
     private void persist(Class master, Class slave, DependencyType type) throws IOException {
         CloudEntityManager em = MF.getFactory().getEntityManager();
         Map<Class, List> entities = new HashMap<>();
+        boolean masterPreviouslyDone = false;
 
         if (isTableAlreadyDone(master)) {
-            log.info("Generation for table [" + master.getSimpleName() + "] was already done");
-            return;
+            System.out.println("Generation for table [" + master.getSimpleName() + "] was already done");
+            masterPreviouslyDone = true;
         } else {
-            log.info("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
+            System.out.println("Generating [" + quantity + "] entities for master class [" + master.getSimpleName() + "]");
             entities.put(master, generate(quantity, master));
 
             setSeqNumberOffset(master.getSimpleName(), quantity);
             for (Object o : entities.get(master)) {
                 em.persist(o);
+                System.out.println("\t" + o.toString());
             }
+
+            saveTableDone(master);
         }
 
         if (slave != null && type != null) {
             if (isTableAlreadyDone(slave)) {
-                log.info("Generation for table [" + master.getSimpleName() + "] was already done");
-                log.info("Get existing " + MAX_OFFSET + " entities of master class: " + master.getSimpleName());
-                entities.put(master, getSomeExisting(em, master));
+                System.out.println("Generation for table [" + slave.getSimpleName() + "] was already done");
             } else {
-                log.info("Generating [" + quantity + "] entities for slave class [" + slave.getSimpleName() + "]");
+                if (masterPreviouslyDone) {
+                    System.out.println("Get existing " + MAX_OFFSET + " entities of (already persisted) master class: " + master.getSimpleName());
+                    entities.put(master, getSomeExisting(em, master));
+                }
+                System.out.println("Generating [" + quantity + "] entities for slave class [" + slave.getSimpleName() + "]");
                 entities.put(slave, generate(quantity, slave, entities.get(master), type));
 
                 setSeqNumberOffset(slave.getSimpleName(), quantity);
                 for (Object o : entities.get(slave)) {
                     em.persist(o);
+                    System.out.println("\t" + o.toString());
                 }
+
+                saveTableDone(slave);
             }
         }
     }
@@ -146,7 +154,7 @@ public class Generate {
 
     private void saveTableDone(Class clazz) throws IOException {
         Writer output = new BufferedWriter(new FileWriter(backupFile, true));
-        output.append(clazz.getSimpleName());
+        output.append(clazz.getSimpleName()).append("\n");
         output.close();
     }
 

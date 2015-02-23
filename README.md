@@ -21,7 +21,9 @@ This will print the usage.
 
 Two are the possibilities:
 
-- `-c` or `--clean` will perform a complete cleanup of the remote Datastore deleting all the entities of all Kind(s).
+- `-c` or `--clean` will perform:
+    - a complete cleanup of the remote Datastore deleting all the entities of all Kind(s)
+    - a cleanup of current backed up files
 - `-a <arg>` or `--amount <arg>`  will generate on the remote Datastore the given number of entities foreach table.
 
 Datastore cleanup is exploited querying the Datastore through the [Metadata API](https://cloud.google.com/appengine/docs/java/datastore/metadataqueries) retrieving all the persisted Kind(s) and then deleting all entities for each Kind.

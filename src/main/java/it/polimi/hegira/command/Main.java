@@ -25,12 +25,16 @@ public class Main {
 
             if (line.hasOption("c")) {
                 System.out.println("Clean datastore");
-                Clean.clean();
+                Clean.cleanDatastore();
+                System.out.println("Clean backup folder");
+                Clean.cleanBackups();
+                System.out.println("\nClean Done");
             } else if (line.hasOption("a")) {
                 int amount = Integer.valueOf(line.getOptionValue("a"));
                 System.out.println("Generate " + amount + " entities per table");
                 Generate g = new Generate(amount);
                 g.generateAll();
+                System.out.println("\nGeneration Done, ^C to terminate");
             } else {
                 printHelp(options);
             }
