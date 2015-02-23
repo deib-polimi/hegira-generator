@@ -36,7 +36,6 @@
 			<version>${kundera.version}</version>
 		</dependency>
 
-
 		<!-- GAE remote API -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
