@@ -11,6 +11,10 @@ mvn clean package
 ```
 An executable jar is created.
 
+Note that the pom file contains as dependencies the modified version of [CPIM](https://github.com/Arci/modaclouds-cpim-library) and the [Kundera GAE Datastore extension](https://github.com/Arci/kundera-gae-datastore) which are not available on public repositories of maven so you need to install them locally through `mvn clean install`.
+For CPIM tests to pass an instance of zookeeper must be reachable on `localhost:2181`, this is not required for building as you can simply skip tests running `mvn clean install -DskipTests`.
+Test for Kundera GAE Datastore extension does not require any configuration as they're executed through google in-memory Datastore emulator.
+
 ###Usage
 To run the program execute the generated jar with dependencies:
 
